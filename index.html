@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu de Pong - Interactif</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+/* Design Global */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #1c1c1c;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #f5f5f5;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Design du Canvas */
+canvas {
+    display: block;
+    margin: 20px auto;
+    width: 90%; /* Canvas s'adapte à 90% de la largeur du conteneur */
+    max-width: 800px; /* Largeur maximale pour grands écrans */
+    height: auto; /* Hauteur adaptative */
+    border: 3px solid #f5f5f5;
+    border-radius: 10px;
+    background-color: #34495e;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.5s ease;
+}
+
+canvas:hover {
+    transform: scale(1.05);
+}
+
+/* Boîte des Messages */
+.message-box {
+    margin-top: 20px;
+    background: #444;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    font-size: 1rem; /* Texte adaptable */
+}
+
+#message {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+/* Boutons */
+.controls button {
+    margin: 10px;
+    font-size: 1rem; /* Taille des boutons adaptable */
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.controls button:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3);
+}
+
+/* Game Over et Félicitations */
+#game-over, #win-screen {
+    display: none;
+    font-size: 2rem;
+    margin-top: 20px;
+    animation: fadeIn 1s ease-in-out;
+    text-align: center;
+}
+
+#game-over {
+    color: #e74c3c;
+}
+
+#win-screen {
+    color: #2ecc71;
+}
+
+/* Paramètres */
+.settings {
+    margin: 20px auto;
+    padding: 15px;
+    background-color: #2c3e50;
+    border-radius: 10px;
+    color: white;
+    display: none;
+    max-width: 500px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    font-size: 0.9rem; /* Texte légèrement plus petit */
+}
+
+.settings h4 {
+    margin-bottom: 10px;
+}
+
+/* Animation pour les transitions */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Media Queries pour Responsiveness */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.5rem; /* Réduit la taille du titre sur petits écrans */
+    }
+
+    .controls button {
+        font-size: 0.9rem; /* Réduit la taille des boutons */
+        padding: 8px 12px; /* Boutons plus petits */
+    }
+
+    .message-box {
+        font-size: 0.9rem;
+    }
+
+    #game-over, #win-screen {
+        font-size: 1.5rem; /* Ajuste le texte pour les petits écrans */
+    }
+}
+
+@media (max-width: 480px) {
+    .controls button {
+        font-size: 0.8rem; /* Encore plus petit pour les très petits écrans */
+        padding: 6px 10px;
+    }
+
+    .settings {
+        font-size: 0.8rem; /* Texte plus compact pour les paramètres */
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="container game-container">
+        <h1>🎮 Jeu de Pong Interactif</h1>
+
+        <canvas id="pong"></canvas>
+
+        <div class="message-box">
+            <p id="message">Cliquez sur "Démarrer" pour commencer !</p>
+        </div>
+
+        <div class="controls">
+            <button id="startButton" class="btn btn-success shadow-lg">Démarrer</button>
+            <button id="resetButton" class="btn btn-warning shadow-lg">Rejouer</button>
+            <button id="exitButton" class="btn btn-danger shadow-lg">Quitter</button>
+            <button id="settingsButton" class="btn btn-info shadow-lg">Paramètres</button>
+        </div>
+
+        <div id="game-over" class="text-danger">Game Over !</div>
+        <div id="win-screen" class="text-success">Félicitations, vous avez gagné !</div>
+
+        <div class="settings">
+            <h4>⚙️ Personnalisez votre jeu</h4>
+            <label for="ballColor">Couleur de la balle :</label>
+            <input type="color" id="ballColor" value="#ffffff">
+
+            <label for="backgroundColor">Couleur du fond :</label>
+            <input type="color" id="backgroundColor" value="#34495e">
+
+            <label for="difficulty">Difficulté :</label>
+            <select id="difficulty" class="custom-select w-50">
+                <option value="1">Facile</option>
+                <option value="2">Moyen</option>
+                <option value="3">Difficile</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Lier le fichier JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
